@@ -1,30 +1,19 @@
 import cv2
-
-# Function to crop and paste region of interest (ROI)
-def crop_and_paste(source_image_path, destination_image_path, x, y, width, height):
-    # Read the source image
-    source_image = cv2.imread(source_image_path)
-
-    # Extract the region of interest (ROI)
-    roi = source_image[y:y+height, x:x+width]
-
-    # Create a blank destination image with the same size as the ROI
-    destination_image = 255 * np.ones_like(roi, dtype=np.uint8)
-
-    # Paste the ROI onto the destination image
-    destination_image[0:height, 0:width] = roi
-
-    # Save the result
-    cv2.imwrite(destination_image_path, destination_image)
-
-# Example usage
-source_path = "C:/Users/dinak/OneDrive/Pictures/Camera imports/download (2).jpeg"
-destination_path = "C:/Users/dinak/OneDrive/Pictures/Camera imports/download (2).jpeg"
-
-# Specify the region of interest (x, y, width, height)
-x = 100
-y = 50
-width = 200
-height = 150
-
-crop_and_paste(source_path, destination_path, x, y, width, height)
+import numpy as np
+image = cv2.imread("C:/Users/divya/OneDrive/Pictures/Saved Pictures/cat.jfif")
+img2 = cv2.imread('C:/Users/divya/OneDrive/Pictures/Saved Pictures/logo.jfif')
+print(image.shape) # Print image shape
+cv2.imshow("original", image)
+imageCopy = image.copy()
+cv2.circle(imageCopy, (100, 100), 30, (255, 0, 0), -1)
+cv2.imshow('image', image)
+cv2.imshow('image copy', imageCopy)
+cropped_image = image[80:280, 150:330]
+cv2.imshow("cropped", cropped_image)
+cv2.imwrite("Cropped Image.jpg", cropped_image)
+dst = cv2.addWeighted(image, 0.5, img2, 0.7, 0)
+img_arr = np.hstack((image, img2))
+cv2.imshow('Input Images',img_arr)
+cv2.imshow('Blended Image',dst)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
